@@ -2,30 +2,43 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SimpleGui3C implements ActionListener{
+public class TwoButtons {
     JFrame frame;
+    JLabel label;
     public static void main (String[] args) {
-        SimpleGui3C gui = new SimpleGui3C();
+        TwoButtons gui = new TwoButtons();
         gui.go();
     }
-
     public void go() {
         frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JButton lableButton = new JButton("Change lable");
+        lableButton.addActionListener(new LabelListener());
 
-        JButton button = new JButton("Change colors");
-        button.addActionListener(this);
+        JButton colorButton = new JButton("Change circle");
+        colorButton.addActionListener(new ColorListener());
 
+        label = new JLabel("I am a label");
         MyDrawPanel drawPanel = new MyDrawPanel();
-
-        frame.getContentPane().add(BorderLayout.SOUTH,button);
+        frame.getContentPane().add(BorderLayout.SOUTH,colorButton);
         frame.getContentPane().add(BorderLayout.CENTER,drawPanel);
+        frame.getContentPane().add(BorderLayout.EAST,lableButton);
+        frame.getContentPane().add(BorderLayout.WEST,label);
+
         frame.setSize(300,300);
         frame.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent event) {
-        frame.repaint();
+    class LabelListener implements ActionListener{
+        public void actionPerformed(ActionEvent event) {
+            label.setText("Ouch!");
+        }
+    }//关闭内部类
+
+    class ColorListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            frame.repaint();
+        }
     }
 }
 
